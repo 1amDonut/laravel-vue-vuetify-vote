@@ -9,7 +9,7 @@ import Verification from '../views/Verification.vue'
 import New from '../views/New.vue'
 import project from '../views/Project.vue'
 import { ValidationProvider } from 'vee-validate';
-Vue.use(VueRouter,ValidationProvider)
+Vue.use(VueRouter, ValidationProvider)
 
 const routes = [{
   path: '/',
@@ -25,7 +25,7 @@ const routes = [{
   // route level code-splitting
   // this generates a separate chunk (about.[hash].js) for this route
   // which is lazy-loaded when the route is visited.
-  component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
+  //component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
 },
 {
   path: '/vote',
@@ -77,7 +77,7 @@ const routes = [{
     layout: 'Admin'
   },
   component: project
-}
+}, { path: '*', redirect: '/' }
 ]
 
 const router = new VueRouter({
