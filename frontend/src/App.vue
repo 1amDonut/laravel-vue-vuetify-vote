@@ -10,7 +10,7 @@
   }
 </style>
 <script>
-import '@/assets/css/app.scss'
+  import '@/assets/css/app.scss'
   const default_layout = "default";
   export default {
     name: 'App',

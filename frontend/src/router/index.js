@@ -8,6 +8,7 @@ import voting from '../views/Voting.vue'
 import Verification from '../views/Verification.vue'
 import New from '../views/New.vue'
 import project from '../views/Project.vue'
+// 驗證資料格式欄位
 import { ValidationProvider } from 'vee-validate';
 Vue.use(VueRouter, ValidationProvider)
 

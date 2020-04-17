@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+
         <!-- class="fill-height" 版面垂直致中 -->
         <v-container class="fill-height" fluid>
             <v-row align="center" justify="center">
@@ -31,17 +31,15 @@
                 </v-col>
             </v-row>
         </v-container>
-         <v-navigation-drawer v-model="drawer" absolute temporary clipped right width="70%">
-            
-        </v-navigation-drawer>
+        <!-- <v-navigation-drawer v-model="drawer" app dark  clipped absolute temporary   >
+        </v-navigation-drawer> -->
     </div>
 </template>
 <script>
     export default {
+        components: {},
         data() {
             return {
-                
-                drawer: null,
                 items: [{
                         icon: 'trending_up',
                         text: 'Most Popular'
@@ -65,7 +63,5 @@
                 ],
             }
         },
-        components:{
-        }
     }
 </script>
