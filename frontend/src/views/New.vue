@@ -44,7 +44,6 @@
                       placeholder="投票活動"
                       label="標題"
                       :rules="nameRules"
-                      v-validate="'required'"
                       outlined
                       required
                     />
@@ -61,11 +60,11 @@
                 <v-btn text>取消</v-btn>
               </v-stepper-content>
 
-              <v-stepper-step :complete="e6 > 2" step="2">編輯條件</v-stepper-step>
+              <v-stepper-step :complete="e6 > 2" step="2">一般設定</v-stepper-step>
 
               <v-stepper-content step="2">
                 <!--***********************
-                    * 編輯條件
+                    * 一般設定
                 ***********************-->
                 <v-col cols="6">
                   <v-menu
@@ -85,7 +84,7 @@
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="form.startDate" @input="menu = false"></v-date-picker>
+                    <v-date-picker v-model="form.startDate" @input="menu = false" locale="zh"></v-date-picker>
                   </v-menu>
                 </v-col>
                 <v-col cols="6">
@@ -106,7 +105,7 @@
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="form.endDate" @input="menu2 = false"></v-date-picker>
+                    <v-date-picker v-model="form.endDate" @input="menu2 = false" locale="zh"></v-date-picker>
                   </v-menu>
                 </v-col>
                 <v-col cols="12">
@@ -129,34 +128,20 @@
 
               <v-stepper-content step="3">
                 <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
+
                 <v-row>
-                  <v-col cols="6">
-                    <v-text-field type="text" placeholder="名稱" />
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field type="text" placeholder="說明" />
+                  <v-col cols="12">
+                    <vButton @callBtn="AddItem()">新增</vButton>
                   </v-col>
                 </v-row>
-                <!--***********************
-                    * todo table
-                ***********************-->
-                <v-simple-table>
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">Name</th>
-                        <th class="text-left">Calories</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="item in desserts" :key="item.name">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.calories }}</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-               
+                <v-row v-for="(index) in itemCount" :key="index">
+                  <v-col cols="9" sm="9">
+                    <v-textarea label="項目" auto-grow outlined rows="1" row-height="15"></v-textarea>
+                  </v-col>
+                  <v-col cols="3" sm="3">
+                    <vButton @callBtn="DelItem(index)" :color="'#dc3545'">刪除</vButton>
+                  </v-col>
+                </v-row>
                 <v-btn color="primary" @click="e6 = 4">繼續</v-btn>
                 <v-btn text>取消</v-btn>
               </v-stepper-content>
@@ -165,7 +150,14 @@
               ***********************-->
               <v-stepper-step step="4">可投票名單</v-stepper-step>
               <v-stepper-content step="4">
-                <v-file-input label="File input" outlined dense></v-file-input>
+                <v-file-input
+                  label="File input"
+                  ref="files"
+                  outlined
+                  dense
+                  v-model="file"
+                  @change="handleFileUpload()"
+                ></v-file-input>
                 <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
                 <v-btn text>Cancel</v-btn>
               </v-stepper-content>
@@ -177,13 +169,23 @@
   </div>
 </template>
 <script>
+import vButton from "../components/Button";
+import axios from "axios";
 export default {
+  components: {
+    vButton
+  },
   data() {
     return {
+      //紀錄投票項目 預設顯示一個欄位
+      itemCount: 1,
       menu: "",
       menu2: "",
       items: [],
-      e6: 1, //stepper
+      //上傳檔案
+      file: null,
+      //stepper
+      e6: 1,
       rules: {
         age: [val => val < 10 || `I don't believe you!`],
         animal: [val => (val || "").length > 0 || "This field is required"],
@@ -223,6 +225,31 @@ export default {
       this.errors.clear();
       this.$validator.reset();
       this.booking = 1;
+    },
+    AddItem() {
+      this.itemCount++;
+    },
+    DelItem() {
+      if (this.itemCount > 1) {
+        if (confirm("確定要刪除嗎?") == true) this.itemCount--;
+      }
+    },
+    handleFileUpload() {
+      let formData = new FormData();
+      formData.append("file", this.file);
+      //use axios
+      axios
+        .post("", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(() => {
+          console.log("SUCCESS");
+        })
+        .catch(() => {
+          console.log("ERROR");
+        });
     }
   },
   computed: {
