@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer app dark clipped absolute v-model="drawer">
+        <v-navigation-drawer app dark clipped >
             <v-list dense>
                 <v-list-item class="mt-4" link>
                     <v-list-item-action>
@@ -21,12 +21,7 @@
     </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                // drawer: true,
-            }
-        },
-        props: ['drawer']
-    }
+export default {
+    props:["drawer"]
+}
 </script>
