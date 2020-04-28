@@ -7,12 +7,14 @@ import dashboard from '../views/Dashboard.vue'
 import voting from '../views/Voting.vue'
 import Verification from '../views/Verification.vue'
 import New from '../views/New.vue'
+import Activity from '../views/Activity.vue'
 import project from '../views/Project.vue'
 // 驗證資料格式欄位
 import { ValidationProvider } from 'vee-validate';
 Vue.use(VueRouter, ValidationProvider)
 
 const routes = [{
+  // 首頁
   path: '/',
   name: 'home',
   meta: {
@@ -29,6 +31,7 @@ const routes = [{
   //component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
 },
 {
+  // 投票活動
   path: '/vote',
   name: 'vote',
   meta: {
@@ -45,6 +48,7 @@ const routes = [{
   component: article
 },
 {
+  // 控制板
   path: '/dashboard',
   name: 'dashboard',
   meta: {
@@ -53,6 +57,7 @@ const routes = [{
   component: dashboard
 },
 {
+  // 投票頁面
   path: '/voting',
   name: 'voting',
   meta: {
@@ -64,14 +69,25 @@ const routes = [{
   path: '/getTicket',
   name: 'getTicket',
   component: Verification,
-}, {
+},
+{
+  // 建立投票頁面
   path: '/new',
   name: 'new',
   meta: {
     layout: 'Admin'
   },
   component: New
-}, {
+},
+{
+  path: '/Activity',
+  name: 'Activity',
+  meta: {
+    layout: 'Admin'
+  },
+  component: Activity
+},
+{
   path: '/project',
   name: 'project',
   meta: {
