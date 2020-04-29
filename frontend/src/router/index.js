@@ -79,6 +79,7 @@ const routes = [{
   },
   component: New
 },
+//設定頁面
 {
   path: '/Activity',
   name: 'Activity',

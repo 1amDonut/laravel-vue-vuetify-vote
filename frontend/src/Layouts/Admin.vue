@@ -13,6 +13,9 @@
 
                     <v-btn text>
                         <router-link to="/" class="white--text">最新消息 </router-link>
+                        <v-badge :content="messages" :value="messages" color="green" overlap>
+                            <v-icon large>mdi-email</v-icon>
+                        </v-badge>
                     </v-btn>
 
                     <v-btn text>
@@ -34,11 +37,11 @@
         <!-- props drawer state ex:if drawer = true then show -->
         <AdminNavigation :drawer="drawer"></AdminNavigation>
         <!-- class="fill-height" 版面垂直致中 -->
-        <v-content>
+        <v-content >
             <slot></slot>
         </v-content>
         <!---footer-->
-        <Footer></Footer>
+        <!-- <Footer></Footer> -->
     </v-app>
 </template>
 <style scoped>
@@ -48,17 +51,21 @@
 </style>
 <script>
     import AdminNavigation from '../components/AdminNavigation'
+    // import Footer from '../components/Footer'
     export default {
         data() {
             return {
                 drawer: null,
+                messages: 2,
+                show: false,
             }
         },
         props: {
             source: String
         },
         components: {
-            AdminNavigation
+            AdminNavigation,
+            // Footer
         }
     }
 </script>

@@ -2,58 +2,34 @@
      <v-container>
           <v-row>
                <v-col cols="12">
-                    <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
-                         <template v-slot:top>
-                              <v-toolbar flat color="white">
-                                   <v-dialog v-model="dialog" max-width="500px">
+                    <v-card color="white lighten-1" class="mb-12">
+                         <v-container>
+                              <v-row>
+                                   <v-col cols="6">
+                                        <div>
+                                             <h1>Email自動通知</h1>
+                                        </div>
+                                   </v-col>
+                                   <v-col cols="6"  class="text-right">
+                                        
+                                         <v-btn small  color="success" right>儲存</v-btn>
+                                   </v-col>
+                              </v-row>
+                              <v-row>
+                                   <!-- <v-col cols="2" ><span class="mx-2"></span></v-col> -->
+                                   <v-col cols="12">
+                                        <v-switch v-model="multiple" class="mx-2" label="通知問卷建立者"></v-switch>
+                                   </v-col>
+                              </v-row>
+                              <v-row>
+                                   <v-col cols="12">
+                                        <v-switch v-model="multiple" class="mx-2" label="通知填答者"></v-switch>
+                                   </v-col>
+                              </v-row>
+                         </v-container>
 
-                                        <v-card>
-                                             <v-card-title>
-                                                  <span class="headline">{{ formTitle }}</span>
-                                             </v-card-title>
+                    </v-card>
 
-                                             <v-card-text>
-                                                  <v-container>
-                                                       <v-row>
-                                                            <v-col cols="12" sm="6" md="12">
-                                                                 <v-text-field v-model="editedItem.name" label="名稱">
-                                                                 </v-text-field>
-                                                            </v-col>
-                                                            <v-col cols="12" sm="6" md="12">
-                                                                 <v-text-field v-model="editedItem.calories" label="註釋">
-                                                                 </v-text-field>
-                                                            </v-col>
-
-                                                            <v-col cols="12" sm="6" md="12">
-                                                                 <v-file-input label="File input" ref="files" outlined
-                                                                      dense v-model="file" @change="handleFileUpload()">
-                                                                 </v-file-input>
-                                                            </v-col>
-                                                       </v-row>
-                                                  </v-container>
-                                             </v-card-text>
-
-                                             <v-card-actions>
-                                                  <v-spacer></v-spacer>
-                                                  <v-btn color="blue darken-1" text @click="close">取消</v-btn>
-                                                  <v-btn color="blue darken-1" text @click="save">儲存</v-btn>
-                                             </v-card-actions>
-                                        </v-card>
-                                   </v-dialog>
-                              </v-toolbar>
-                         </template>
-                         <template v-slot:item.actions="{ item }">
-                              <v-icon small class="mr-2" @click="editItem(item)">
-                                   mdi-pencil
-                              </v-icon>
-                              <v-icon small @click="deleteItem(item)">
-                                   mdi-delete
-                              </v-icon>
-                         </template>
-                         <template v-slot:no-data>
-                              <v-btn color="primary" @click="initialize">Reset</v-btn>
-                         </template>
-                    </v-data-table>
                </v-col>
           </v-row>
      </v-container>

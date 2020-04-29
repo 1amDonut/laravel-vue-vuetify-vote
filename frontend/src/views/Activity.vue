@@ -19,6 +19,8 @@
 </template>
 <script>
      import Chart from '../views/Chart'
+     import Notification from '../views/Notification'
+     import Details from '../views/Export'
      export default {
           data() {
                return {
@@ -27,7 +29,7 @@
                          components: 'Chart',
                          name: '統計圖表'
                     }, {
-                         components: 'details',
+                         components: 'Details',
                          name: '明細匯出'
                     }, {
                          components: 'notification',
@@ -119,7 +121,12 @@
                }
           },
           components: {
-               Chart
+               // 統計圖表
+               Chart,
+               // 信件通知
+               Notification,
+               // 匯出名單
+               Details
           }
      };
 </script>
