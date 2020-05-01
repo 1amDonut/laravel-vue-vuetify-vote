@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatUsersTable extends Migration
+class CreateVotestub extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreatUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function(Blueprint $table) {
-            $table->string('account', 20)->primary();
-            $table->string('password', 60);
-            $table->string('name', 50);
-            $table->datetime('created_at');
+        Schema::create('votestub', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('idActivity');
+            $table->string('ticket', 64)->comment('票根');
+            $table->timestamps();
         });
-        //
     }
 
     /**
@@ -29,6 +28,6 @@ class CreatUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        //
     }
 }
