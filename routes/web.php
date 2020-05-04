@@ -33,4 +33,6 @@
 // Route::get('/updateComment', function () {
 //     return view('updateComment');
 // });
+
+Route::get('phpinfo', 'UserController@phpinfo');
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

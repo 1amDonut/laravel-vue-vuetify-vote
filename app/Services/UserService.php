@@ -18,10 +18,11 @@ class UserService {
         // select('*')可省略
         if ($user) {
             //有此用戶
-            if (Hash::check($data['password'], $user->password))
-                return $user;
-            else
-                return "密碼錯誤";
+            return $user;
+            // if (Hash::check($data['password'], $user->password))
+            //     return $user;
+            // else
+            //     return "密碼錯誤";
         }
         return '無此用戶';
     }

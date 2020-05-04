@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
+use App\User;
 
 use App\Services\UserService;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $postData = $request->all();
         $objValidator = Validator::make(
             $postData,
@@ -46,14 +48,14 @@ class UserController extends Controller
         if ($objValidator->fails())
             return response()->json($objValidator->errors()->all(), 400);
         //SQL插入
-        $userService = new UserService();
-        $userService->register($postData);
+        // $userService = new UserService();
+        // $userService->register($postData);
         return response()->json("註冊成功", 200);
     }
 
     public function login(Request $request)
     {
-        $postData=$request->all();
+        $postData = $request->all();
         $objValidator = Validator::make(
             $postData,
             [
@@ -80,7 +82,6 @@ class UserController extends Controller
         } else {
             return response()->json([$result], 400);
         }
-        
     }
 
     public function getUserData(Request $request)
@@ -88,5 +89,10 @@ class UserController extends Controller
         $userData = $request->input('user');
         return response()->json($userData, 200);
     }
-
+    public function phpinfo()
+    {
+        phpinfo();
+        // $user = User::all();
+        // return response()->json($user, 200);
+    }
 }
