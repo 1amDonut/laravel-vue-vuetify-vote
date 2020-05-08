@@ -48,8 +48,8 @@ class UserController extends Controller
         if ($objValidator->fails())
             return response()->json($objValidator->errors()->all(), 400);
         //SQL插入
-        // $userService = new UserService();
-        // $userService->register($postData);
+        $userService = new UserService();
+        $userService->register($postData);
         return response()->json("註冊成功", 200);
     }
 
@@ -71,7 +71,6 @@ class UserController extends Controller
                 'password.required' => '請輸入密碼',
             ]
         );
-
         if ($objValidator->fails())
             return response()->json($objValidator->errors()->all(), 400);
         $userService = new UserService();

@@ -17,6 +17,22 @@ Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
 
 Route::group(['middleware' => 'jwtAuth'], function () {
+    // RESTful 
+    // 公佈欄
+    Route::group(['prefix'=>'news'],function(){
+        Route::get('getNewsData','NewsController@news');
+        Route::post('comment', 'CommentController@comment');
+        Route::PUT('updateNews', 'commentController@updateCommentData');
+        Route::DELETE('deleteNews', 'commentController@deleteCommentData');
+    });
+    // // //投票活動
+    // Route::group(['prefix'=>'activity'],function(){
+    //     Route::get('getNewsData','CommentController@getCommentData');
+    //     Route::post('comment', 'CommentController@comment');
+    //     Route::PUT('updateNews', 'commentController@updateCommentData');
+    //     Route::DELETE('deleteNews', 'commentController@deleteCommentData');
+    // });
+    
     Route::get('getUserData', 'UserController@getUserData');
     Route::get('getUserComment', 'CommentController@getUserComment');
     Route::get('getCommentData','CommentController@getCommentData');

@@ -22,9 +22,9 @@ class NewsService
           // ->toArray();
      }
 
-     public function getCommentData($data)
+     public function getAllData()
      {
-          return News::where('idNews', $data)->get();
+          return News::all();
      }
 
      public function updateNews($data)
