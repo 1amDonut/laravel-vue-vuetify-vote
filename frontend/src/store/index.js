@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import news from "./modules/news"
+import product from "./modules/new"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,5 +12,9 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    // 最新消息
+    news,
+    // 建立投票
+    product
   }
 })

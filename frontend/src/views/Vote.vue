@@ -42,7 +42,9 @@
     export default {
         data() {
             return {
+                // 目前頁碼
                 page: 1,
+                // 一頁顯示幾筆
                 perPage: 6,
 
                 rows: [{
