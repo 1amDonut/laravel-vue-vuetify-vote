@@ -34,22 +34,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in visiblePages" :key="item.title">
+              <tr v-for="item in visiblePages" :key="item.id">
+                <td class="headline">{{ item.id }}</td>
                 <td class="headline">{{ item.title }}</td>
-                <td class="headline">{{ item.content }}</td>
               </tr>
             </tbody>
-
           </template>
 
         </v-simple-table>
-        <center><span class="headline" v-if="rows.length==0">無任何最新消息</span></center>
+        <!-- <center><span class="headline" v-if="news.todo.length==0">無任何最新消息</span></center> -->
       </v-col>
     </v-row>
 
 
     <v-row>
-      <v-pagination v-model="page" :length="Math.ceil(rows.length/perPage)"></v-pagination>
+      <v-pagination v-model="page" :length="Math.ceil(news.length/perPage)"></v-pagination>
 
       <!-- <div class="text-center">
         <ul>
@@ -66,92 +65,40 @@
 </template>
 
 <script>
+  import {
+    mapState,
+  } from "vuex";
   export default {
     data() {
       return {
-        page: 1, //目前頁碼
-        perPage: 4, //一頁顯示幾筆資料
-
-        rows: [{
-            title: '1',
-            content: 'this is a content'
-          }, {
-            title: '2',
-            content: 'this is a content'
-          },
-          {
-            title: '3',
-            content: 'this is a content'
-          }, {
-            title: '4',
-            content: 'this is a content'
-          }, {
-            title: '5',
-            content: 'this is a content'
-          }, {
-            title: '6',
-            content: 'this is a content'
-          }, {
-            title: '7',
-            content: 'this is a content'
-          }, {
-            title: '8',
-            content: 'this is a content'
-          }, {
-            title: '9',
-            content: 'this is a content'
-          }, {
-            title: '10',
-            content: 'this is a content'
-          },
-        ],
+        // 目前頁碼
+        page: 1,
+        // 一頁顯示幾筆
+        perPage: 10,
+        rows: [],
         countOfPage: 5,
         currPage: 1,
         filter_name: '',
-        news: [{
-          title: 'test',
-          content: 'this is a content'
-        }, {
-          title: 'test',
-          content: 'this is a content'
-        }]
       }
     },
     computed: {
-      filteredRows: function () {
-        // 因為 JavaScript 的 filter 有分大小寫，
-        // 所以這裡將 filter_name 與 rows[n].name 通通轉小寫方便比對。
-        // var filter_name = this.filter_name.toLowerCase();
 
-        // 如果 filter_name 有內容，回傳過濾後的資料，否則將原本的 rows 回傳。
-        return this.rows;
-      },
-      pageStart: function () {
-        return (this.currPage - 1) * this.countOfPage;
-      },
-      totalPage: function () {
-        return Math.ceil(this.filteredRows.length / this.countOfPage);
-      },
-      visiblePages() {
-        return this.rows.slice((this.page - 1) * this.perPage, this.page * this.perPage)
+      ...mapState({
+        news: state => state.news.todo
+      }),
+
+      visiblePages(state) {
+        console.log(state.news);
+        return state.news.slice((this.page - 1) * this.perPage, this.page * this.perPage)
       }
-    },
-    methods: {
-      setPage: function (idx) {
-        if (idx <= 0 || idx > this.totalPage) {
-          return;
-        }
-        this.currPage = idx;
-      },
-      pages() {
-        return this.pagination.rowsPerPage ? Math.ceil(this.rows.length / this.pagination.rowsPerPage) : 0
-      },
 
     },
+    methods: {},
     components: {},
     name: 'News',
     created() {
       //  this.$emit(`update:layout`,Layout);
+      this.$store.dispatch("GET_NEWS");
     }
   };
 </script>
