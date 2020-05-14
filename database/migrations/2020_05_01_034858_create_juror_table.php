@@ -28,6 +28,6 @@ class CreateJurorTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('juror');
     }
 }

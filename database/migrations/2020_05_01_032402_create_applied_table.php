@@ -35,6 +35,6 @@ class CreateAppliedTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('applied');
     }
 }

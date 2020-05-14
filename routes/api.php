@@ -18,20 +18,24 @@ Route::post('login', 'UserController@login');
 
 Route::group(['middleware' => 'jwtAuth'], function () {
     // RESTful 
-    // 公佈欄
+    /**
+     * 公佈欄
+     */
     Route::group(['prefix'=>'news'],function(){
         Route::get('getNewsData','NewsController@news');
-        Route::post('comment', 'CommentController@comment');
-        Route::PUT('updateNews', 'commentController@updateCommentData');
-        Route::DELETE('deleteNews', 'commentController@deleteCommentData');
+        Route::post('comment', 'NewsController@comment');
+        Route::PUT('updateNews', 'NewsController@updateCommentData');
+        Route::DELETE('deleteNews', 'NewsController@deleteCommentData');
     });
-    // // //投票活動
-    // Route::group(['prefix'=>'activity'],function(){
-    //     Route::get('getNewsData','CommentController@getCommentData');
-    //     Route::post('comment', 'CommentController@comment');
-    //     Route::PUT('updateNews', 'commentController@updateCommentData');
-    //     Route::DELETE('deleteNews', 'commentController@deleteCommentData');
-    // });
+    /**
+     * 投票活動
+     */
+    Route::group(['prefix'=>'activity'],function(){
+        Route::get('show','ActivityController@showActivity');
+        Route::get('getActivityData','ActivityController@getCommentData');
+        Route::PUT('updateActivity', 'ActivityController@updateActivityData');
+        Route::DELETE('deleteActivity', 'ActivityController@deleteActivityData');
+    });
     
     Route::get('getUserData', 'UserController@getUserData');
     Route::get('getUserComment', 'CommentController@getUserComment');

@@ -33,6 +33,6 @@ class CreateStaff extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('staff');
     }
 }
