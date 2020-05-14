@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
 
-Route::group(['middleware' => 'jwtAuth'], function () {
+Route::group(['middleware' => ['jwtAuth','cors']], function () {
     // RESTful 
     /**
      * 公佈欄
@@ -37,6 +37,9 @@ Route::group(['middleware' => 'jwtAuth'], function () {
         Route::DELETE('deleteActivity', 'ActivityController@deleteActivityData');
     });
     
+    Route::group(['prefix'=>'admin'],function(){
+        Route::get('getClassify','AdminController@getClassify');
+    });
     Route::get('getUserData', 'UserController@getUserData');
     Route::get('getUserComment', 'CommentController@getUserComment');
     Route::get('getCommentData','CommentController@getCommentData');

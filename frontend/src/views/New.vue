@@ -79,7 +79,8 @@
                   <v-textarea outlined v-model="form.Description" name="input-7-4" label="活動說明"></v-textarea>
                 </v-col>
                 <v-col cols="6">
-                  <v-select :items="items" label="活動類別"></v-select>
+                  <v-select :items="items" label="活動類別">
+                  </v-select>
                   <!-- <v-text-field prepend-icon="mdi-account-card-details-outline" placeholder="開始日期" /> -->
                 </v-col>
                 <v-col cols="6">
@@ -337,6 +338,7 @@
       };
     },
     created() {
+      this.$store.dispatch("GET_CLASSIFY");
       this.initialize()
     },
     methods: {
@@ -428,6 +430,7 @@
     },
     computed: {
       ...mapState({
+        classify:state=>state.admin.classify,
         item_headers:state=>state.product.ItemHeaders
       }),
       isDisabled() {
