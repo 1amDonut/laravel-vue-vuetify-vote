@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
 
-Route::group(['middleware' => ['jwtAuth','cors']], function () {
+// Route::group(['middleware' => ['jwtAuth','cors']], function () {
+Route::group(['middleware' => ['cors']], function () {
     // RESTful 
     /**
      * 公佈欄
@@ -39,6 +40,9 @@ Route::group(['middleware' => ['jwtAuth','cors']], function () {
     
     Route::group(['prefix'=>'admin'],function(){
         Route::get('getClassify','AdminController@getClassify');
+        Route::get('getDepartment','AdminController@getDev');
+        Route::post('post','AdminController@post');
+        Route::post('upload','AdminController@upload');
     });
     Route::get('getUserData', 'UserController@getUserData');
     Route::get('getUserComment', 'CommentController@getUserComment');

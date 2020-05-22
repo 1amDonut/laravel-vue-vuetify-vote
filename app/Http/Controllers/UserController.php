@@ -15,6 +15,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $postData = $request->all();
+        return $postData;
         $objValidator = Validator::make(
             $postData,
             [

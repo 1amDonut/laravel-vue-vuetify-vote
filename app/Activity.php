@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $table = 'Activity';
+    protected $table = 'activity';
+    
+    protected $fillable = ['activityName','startDate','endDate',
+    'needSignup','voteQry','rule','organizer','manager','activityDescription',
+    'isVisible','startAnnounce','attachmentFile'];
 }
