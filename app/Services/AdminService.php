@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Activity;
 use App\Comment;
+use App\Applied;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,13 +12,17 @@ class AdminService
 {
     public function post($postdata)
     {
-        // $newActivity = Activity::create($postdata);
-        // return Activity::select('activity.*')
-        //     ->find($newActivity->idActivity);
+        $idActivity = "";
         try {
-            $newComment = Activity::create($postdata);
-            return 'success';
+            $newActivity = Activity::create($postdata);
+            $idActivity = Activity::select('idActivity')->find($newActivity);
         } catch (Exception $e) {
+            return $e;
+        }
+
+        try{
+            $newApplied = Applied::created($postdata["desserts"]);
+        }catch(Exception $e){
             return $e;
         }
     }

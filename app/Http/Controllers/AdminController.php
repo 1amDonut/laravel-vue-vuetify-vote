@@ -12,7 +12,8 @@ class AdminController extends BaseController
 {
     /**
      * 取得投票類別
-     * @return json 
+     * @return json
+     * ex:類別 
      */
     public function getClassify()
     {
@@ -21,6 +22,8 @@ class AdminController extends BaseController
     }
     /**
      * 取得各單位
+     * ex:校務資訊組
+     * methods POST
      */
     public function getDev(){
         $result = Department::all();
@@ -28,19 +31,28 @@ class AdminController extends BaseController
     }
     /**
      * 送出投票項目
-     * @post
+     * methods POST
+     * @return json
      */
     public function post(Request $request)
     {
         $postData = $request->all();
+        // 建立投票活動者為管理員
         $postData["manager"] = "1310731047";
-        $postData["startAnnounce"] = "2020-05-22";
+
+        print_r($postData);
+        print_r($postData["desserts"]);
+        // 建立報名時間
+        $postData["signupTime"] = date('Y-m-d H:i:s');
         $adminService = new AdminService();
-        $result = $adminService->post($postData);
-        return $this->sendResponse($result, 'success');
+        // $result = $adminService->post($postData);
+        // return $this->sendResponse($result, 'success');
+        return $this->sendResponse('success', 'success');
     }
     /**
-     * @get
+     * 上傳功能
+     * methods POST
+     * @return json
      */
     public function upload(){
         $data = array("url"=>"https://autos.yahoo.com.tw/p/r/w1200/car-trim/April2020/86f0ee25b04090de368f8202649df887.jpeg");

@@ -11,416 +11,427 @@
     </v-list-item>
     <!-- 分隔 -->
     <v-divider></v-divider>
-
-    <v-card>
-      <v-container>
-        <v-row class="mx-2">
-          <v-col cols="12">
-            <!-- 
+    <v-skeleton-loader :loading="loading" :transition="transition" type="list-item-two-line">
+      <v-card>
+        <v-container>
+          <v-row class="mx-2">
+            <v-col cols="12">
+              <!-- 
             Start of: Step 1
             Create Activity 
-            -->
-            <v-stepper v-model="e6" vertical>
-              <v-stepper-step :complete="e6 > 1" step="1">建立投票活動</v-stepper-step>
+              -->
 
-              <v-stepper-content step="1">
-                <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
+              <v-stepper v-model="e6" vertical>
+                <v-stepper-step :complete="e6 > 1" step="1">建立投票活動</v-stepper-step>
 
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">問卷名稱</v-col>
-                  <v-col cols="12" sm="10" md="10">
-                    <v-text-field
-                      v-model="form.activityName"
-                      placeholder="投票活動"
-                      label="標題"
-                      :rules="nameRules"
-                      outlined
-                      required
-                    />
-                  </v-col>
-                </v-row>
+                <v-stepper-content step="1">
+                  <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
 
-                <!-- 設定投票簡介 -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">投票簡介</v-col>
-                  <v-col cols="12" sm="10" md="10">
-                    <!-- CKEditor -->
-                    <ckeditor :editor="editor" v-model="form.introduction" :config="editorConfig"></ckeditor>
-                  </v-col>
-                </v-row>
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">問卷名稱</v-col>
+                    <v-col cols="12" sm="10" md="10">
+                      <v-text-field
+                        v-model="form.activityName"
+                        placeholder="投票活動"
+                        label="標題"
+                        :rules="nameRules"
+                        outlined
+                        required
+                      />
+                      {{days}}
+                      <select-component :options="days"></select-component>
+                      <Select2 :options="days" />
+                    </v-col>
+                  </v-row>
 
-                <!--設定投票說明  -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">投票說明</v-col>
-                  <v-col cols="12" sm="10" md="10">
-                    <!-- CKEditor -->
-                    <ckeditor
-                      :editor="editor"
-                      v-model="form.activityDescription"
-                      :config="editorConfig"
-                    ></ckeditor>
-                    <!-- <v-textarea outlined v-model="form.Description" name="input-7-4" label="活動說明"></v-textarea> -->
-                  </v-col>
-                </v-row>
-                <!-- /**
+                  <!-- 設定投票簡介 -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">投票簡介</v-col>
+                    <v-col cols="12" sm="10" md="10">
+                      <!-- CKEditor -->
+                      <ckeditor :editor="editor" v-model="form.introduction" :config="editorConfig"></ckeditor>
+                    </v-col>
+                  </v-row>
+
+                  <!--設定投票說明  -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center">投票說明</v-col>
+                    <v-col cols="12" sm="10" md="10">
+                      <!-- CKEditor -->
+                      <ckeditor
+                        :editor="editor"
+                        v-model="form.activityDescription"
+                        :config="editorConfig"
+                      ></ckeditor>
+                      <!-- <v-textarea outlined v-model="form.Description" name="input-7-4" label="活動說明"></v-textarea> -->
+                    </v-col>
+                  </v-row>
+                  <!-- /**
                 *   method1
                 *  :disabled="!(form.activityName.length != '')"
-                */-->
-                <v-btn color="primary" @click="e6 = 2" :disabled="isCreateSuccess">繼續</v-btn>
+                  */-->
+                  <v-btn color="primary" @click="e6 = 2" :disabled="isCreateSuccess">繼續</v-btn>
 
-                <v-btn text>取消</v-btn>
-              </v-stepper-content>
+                  <v-btn text>取消</v-btn>
+                </v-stepper-content>
 
-              <!-- 
+                <!-- 
                 End of: Step 1
                 Create Activity
-              -->
+                -->
 
-              <!-- 
+                <!-- 
                 Start of: Step 2
                 Setting Custom data
-              -->
-              <v-stepper-step :complete="e6 > 2" step="2">一般設定</v-stepper-step>
+                -->
+                <v-stepper-step :complete="e6 > 2" step="2">一般設定</v-stepper-step>
 
-              <v-stepper-content step="2">
-                <!---->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">開放投票期間</v-col>
-                  <!-- 開始時間 -->
-                  <v-col cols="12" sm="5" md="5">
-                    <v-menu
-                      v-model="menu"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      transition="scale-transition"
-                      offset-y
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="form.startDate"
-                          label="開始日期"
-                          prepend-icon
-                          readonly
-                          outlined
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker v-model="form.startDate" @input="menu = false" locale="zh"></v-date-picker>
-                    </v-menu>
-                  </v-col>
-                  <!-- 結束時間 -->
-                  <v-col cols="12" sm="5" md="5">
-                    <v-menu
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      transition="scale-transition"
-                      offset-y
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-text-field
-                          v-model="form.endDate"
-                          label="結束日期"
-                          prepend-icon
-                          readonly
-                          outlined
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <!-- language set chinese locate default zh  -->
-                      <v-date-picker v-model="form.endDate" @input="menu2 = false" locale="zh"></v-date-picker>
-                    </v-menu>
-                  </v-col>
-                </v-row>
+                <v-stepper-content step="2">
+                  <!---->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">開放投票期間</v-col>
+                    <!-- 開始時間 -->
+                    <v-col cols="12" sm="3" md="2">
+                      <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on }">
+                          <v-text-field
+                            v-model="form.startDate"
+                            label="開始日期"
+                            prepend-icon
+                            readonly
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="form.startDate" @input="menu = false" locale="zh"></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                    <!-- 結束時間 -->
+                    <v-col cols="12" sm="3" md="2">
+                      <v-menu
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on }">
+                          <v-text-field
+                            v-model="form.endDate"
+                            label="結束日期"
+                            prepend-icon
+                            readonly
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <!-- language set chinese locate default zh  -->
+                        <v-date-picker v-model="form.endDate" @input="menu2 = false" locale="zh"></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                  </v-row>
 
-                <!-- 活動類別 EX:其他類、學習、研討會... -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">活動類別</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <v-select
-                      :items="classify"
-                      item-value="id"
-                      item-text="className"
-                      placeholder="必填"
-                      outlined
-                    ></v-select>
-                  </v-col>
-                </v-row>
+                  <!-- 活動類別 EX:其他類、學習、研討會... -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">活動類別</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <v-select
+                        :items="classify"
+                        item-value="id"
+                        item-text="className"
+                        placeholder="必填"
+                        outlined
+                      ></v-select>
+                    </v-col>
+                  </v-row>
 
-                <!-- 設定投票數 規則未定 -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">投票數</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <v-text-field
-                      type="number"
-                      min="1"
-                      v-model="form.voteQry"
-                      outlined
-                      placeholder="必填"
-                    />
-                  </v-col>
-                </v-row>
+                  <!-- 設定投票數 規則未定 -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">投票數</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <v-text-field
+                        type="number"
+                        min="1"
+                        v-model="form.voteQry"
+                        outlined
+                        placeholder="必填"
+                      />
+                    </v-col>
+                  </v-row>
 
-                <!-- 設定是否需報名 -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">是否報名</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <v-select
-                      outlined
-                      :items="needSignupItem"
-                      v-model="form.needSignup"
-                      item-value="value"
-                      item-text="name"
-                      placeholder="必填"
-                    ></v-select>
-                  </v-col>
-                </v-row>
-                <!--  主辦單位 -->
+                  <!-- 設定是否需報名 -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">是否報名</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <v-select
+                        outlined
+                        :items="needSignupItem"
+                        v-model="form.needSignup"
+                        item-value="value"
+                        item-text="name"
+                        placeholder="必填"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                  <!--  主辦單位 -->
 
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">主辦單位</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <!-- <v-select
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">主辦單位</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <!-- <v-select
                       outlined
                       :items="department"
                       item-value="DEP_NODE"
                       item-text="DEP_NAME"
                       placeholder="必填"
-                    ></v-select>-->
-                    <v-autocomplete
-                      :items="department"
-                      v-model="form.organizer"
-                      color="white"
-                      no-data="無"
-                      item-text="DEP_NAME"
-                      item-value="DEP_NODE"
-                      locale="zh"
-                      outlined
-                    ></v-autocomplete>
-                  </v-col>
-                </v-row>
-                <!-- 評分規則 -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">評分規則</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <v-select
-                      outlined
-                      :items="rulesItem"
-                      v-model="form.rule"
-                      item-value="value"
-                      item-text="name"
-                      placeholder="必填"
-                    ></v-select>
-                  </v-col>
-                </v-row>
+                      ></v-select>-->
+                      <v-autocomplete
+                        :items="department"
+                        v-model="form.organizer"
+                        color="white"
+                        no-data="無"
+                        item-text="DEP_NAME"
+                        item-value="DEP_NODE"
+                        locale="zh"
+                        outlined
+                      ></v-autocomplete>
+                    </v-col>
+                  </v-row>
+                  <!-- 評分規則 -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">評分規則</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <v-select
+                        outlined
+                        :items="rulesItem"
+                        v-model="form.rule"
+                        item-value="value"
+                        item-text="name"
+                        placeholder="必填"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
 
-                <!-- 是否公開 -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">是否公開</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <v-switch label="公開" value="1" v-model="form.public"></v-switch>
-                  </v-col>
-                </v-row>
+                  <!-- 是否公開 -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">是否公開</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <v-switch label="公開" value="1" v-model="form.public"></v-switch>
+                    </v-col>
+                  </v-row>
 
-                <!-- 設定公告時間 -->
-                <v-row>
-                  <v-col cols="12" sm="2" md="2" class="text-center">公告時間</v-col>
-                  <v-col cols="12" sm="5" md="5">
-                    <v-select
-                      outlined
-                      :items="startAnnounceItem"
-                      v-model="form.startAnnouncetime"
-                      item-value="value"
-                      item-text="name"
-                      placeholder="必填"
-                    ></v-select>
-                  </v-col>
-                </v-row>
-                <!--  -->
-                <v-btn color="primary" @click="e6 = 3" :disabled="isDisabled">繼續</v-btn>
-                <v-btn text @click="e6 = 1">取消</v-btn>
-              </v-stepper-content>
+                  <!-- 設定公告時間 -->
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="text-center font-bold">公告時間</v-col>
+                    <v-col cols="12" sm="5" md="5">
+                      <v-select
+                        outlined
+                        :items="startAnnounceItem"
+                        v-model="startAnnounceformat"
+                        item-value="value"
+                        item-text="name"
+                        placeholder="必填"
+                      ></v-select>
+                    </v-col>
+                    <!-- Watch startAnnounceformat 計算開始公告時間 -->
+                    <v-cols cols="12" sm="5" md="5">
+                      <span v-if="form.startAnnounce">於{{form.startAnnounce}}開始公告活動</span>
+                    </v-cols>
+                  </v-row>
+                  <!--  -->
+                  <v-btn color="primary" @click="e6 = 3" :disabled="isDisabled">繼續</v-btn>
+                  <v-btn text @click="e6 = 1">取消</v-btn>
+                </v-stepper-content>
 
-              <!--
+                <!--
                 End of:
                 Setting custom data
-              -->
+                -->
 
-              <!--
+                <!--
                 Start of:
                 Add voting list by DataTable
-              -->
-              <v-stepper-step :complete="e6 > 3" step="3">加入投票項目</v-stepper-step>
+                -->
+                <v-stepper-step :complete="e6 > 3" step="3">加入投票項目</v-stepper-step>
 
-              <v-stepper-content step="3">
-                <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
-                <v-row>
-                  <v-col cols="12">
-                    <!-- use vuetify data-table -->
-                    <v-data-table
-                      :headers="candidate_headers"
-                      :items="form.desserts"
-                      sort-by="calories"
-                      class="elevation-1"
-                    >
-                      <template v-slot:top>
-                        <v-toolbar flat color="white">
-                          <v-spacer></v-spacer>
-                          <v-dialog v-model="dialog" max-width="500px">
-                            <template v-slot:activator="{ on }">
-                              <v-btn color="primary" dark class="mb-2" v-on="on">加入</v-btn>
-                            </template>
-                            <v-card>
-                              <v-card-title>
-                                <span class="headline">加入</span>
-                              </v-card-title>
+                <v-stepper-content step="3">
+                  <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
+                  <v-row>
+                    <v-col cols="12">
+                      <!-- use vuetify data-table -->
+                      <v-data-table
+                        :headers="candidate_headers"
+                        :items="form.desserts"
+                        sort-by="calories"
+                        class="elevation-1"
+                      >
+                        <template v-slot:top>
+                          <v-toolbar flat color="white">
+                            <v-spacer></v-spacer>
+                            <v-dialog v-model="dialog" max-width="500px">
+                              <template v-slot:activator="{ on }">
+                                <v-btn color="primary" dark class="mb-2" v-on="on">加入</v-btn>
+                              </template>
+                              <v-card>
+                                <v-card-title>
+                                  <span class="headline">加入</span>
+                                </v-card-title>
 
-                              <!-- V-card  -->
-                              <v-card-text>
-                                <v-container>
-                                  <v-row>
-                                    <v-col cols="12" sm="6" md="6">
-                                      <v-text-field v-model="editedItem.name" label="候選人"></v-text-field>
-                                    </v-col>
+                                <!-- V-card  -->
+                                <v-card-text>
+                                  <v-container>
+                                    <v-row>
+                                      <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="editedItem.name" label="候選人"></v-text-field>
+                                      </v-col>
 
-                                    <v-col cols="12" sm="12" md="12">
-                                      <v-text-field v-model="editedItem.remarks" label="備註"></v-text-field>
-                                    </v-col>
+                                      <v-col cols="12" sm="12" md="12">
+                                        <v-text-field v-model="editedItem.remarks" label="備註"></v-text-field>
+                                      </v-col>
 
-                                    <v-col cols="12" sm="12" md="12">
-                                      <v-file-input
-                                        label="File input"
-                                        ref="files"
-                                        outlined
-                                        dense
-                                        v-model="file"
-                                        @change="handleFileUpload()"
-                                      ></v-file-input>
-                                    </v-col>
-                                  </v-row>
-                                </v-container>
-                              </v-card-text>
+                                      <v-col cols="12" sm="12" md="12">
+                                        <v-file-input
+                                          label="File input"
+                                          ref="files"
+                                          outlined
+                                          dense
+                                          v-model="file"
+                                          @change="handleFileUpload()"
+                                        ></v-file-input>
+                                      </v-col>
+                                    </v-row>
+                                  </v-container>
+                                </v-card-text>
 
-                              <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="close">取消</v-btn>
-                                <v-btn color="blue darken-1" text @click="save">儲存</v-btn>
-                              </v-card-actions>
-                            </v-card>
-                          </v-dialog>
-                        </v-toolbar>
-                      </template>
-                      <template v-slot:item.actions="{ item }">
-                        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-                      </template>
-                      <template v-slot:no-data></template>
-                    </v-data-table>
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="blue darken-1" text @click="close">取消</v-btn>
+                                  <v-btn color="blue darken-1" text @click="save">儲存</v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </v-toolbar>
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                          <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+                          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+                        </template>
+                        <template v-slot:no-data></template>
+                      </v-data-table>
 
-                    <!--
+                      <!--
                     End of:
                     Add voting list by DataTable
-                    -->
-                  </v-col>
-                </v-row>
+                      -->
+                    </v-col>
+                  </v-row>
 
-                <v-row align="center" class="mr-0">
-                  <v-avatar size="40px" class="mx-3"></v-avatar>
-                </v-row>
-                <v-btn color="primary" @click="e6 = 4">繼續</v-btn>
-                <v-btn text @click="e6=2">取消</v-btn>
-              </v-stepper-content>
+                  <v-row align="center" class="mr-0">
+                    <v-avatar size="40px" class="mx-3"></v-avatar>
+                  </v-row>
+                  <v-btn color="primary" @click="e6 = 4">繼續</v-btn>
+                  <v-btn text @click="e6=2">取消</v-btn>
+                </v-stepper-content>
 
-              <!--
+                <!--
                 Start of 
                 setting vote list by dataTable
-              -->
-              <v-stepper-step step="4">可投票名單</v-stepper-step>
-              <v-stepper-content step="4">
-                <v-row>
-                  <v-col cols="12">
-                    <v-data-table
-                      :headers="join_list_headers"
-                      :items="form.allowDesserts"
-                      sort-by="calories"
-                      class="elevation-1"
-                    >
-                      <template v-slot:top>
-                        <v-toolbar flat color="white">
-                          <v-spacer></v-spacer>
-                          <v-dialog v-model="allowList_dialog" max-width="500px">
-                            <template v-slot:activator="{ on }">
-                              <v-btn color="primary" dark class="mb-2" v-on="on">加入</v-btn>
-                            </template>
-                            <v-card>
-                              <v-card-title>
-                                <span class="headline">加入</span>
-                              </v-card-title>
+                -->
+                <v-stepper-step step="4">可投票名單</v-stepper-step>
+                <v-stepper-content step="4">
+                  <v-divider dark></v-divider>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-data-table
+                        :headers="join_list_headers"
+                        :items="form.allowDesserts"
+                        sort-by="calories"
+                        class="elevation-1"
+                      >
+                        <template v-slot:top>
+                          <v-toolbar flat color="white">
+                            <v-spacer></v-spacer>
+                            <v-dialog v-model="allowList_dialog" max-width="500px">
+                              <template v-slot:activator="{ on }">
+                                <v-btn color="primary" dark class="mb-2" v-on="on">加入</v-btn>
+                              </template>
+                              <v-card>
+                                <v-card-title>
+                                  <span class="headline">加入</span>
+                                </v-card-title>
 
-                              <!-- V-card  -->
-                              <v-card-text>
-                                <v-container>
-                                  <v-row>
-                                    <v-col cols="12" sm="6" md="6">
-                                      <v-text-field v-model="allowEditedItem.name" label="名稱"></v-text-field>
-                                    </v-col>
+                                <!-- V-card  -->
+                                <v-card-text>
+                                  <v-container>
+                                    <v-row>
+                                      <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="allowEditedItem.name" label="名稱"></v-text-field>
+                                      </v-col>
 
-                                    <v-col cols="12" sm="12" md="12">
-                                      <v-text-field v-model="allowEditedItem.develop" label="單位"></v-text-field>
-                                    </v-col>
+                                      <v-col cols="12" sm="12" md="12">
+                                        <v-text-field v-model="allowEditedItem.develop" label="單位"></v-text-field>
+                                      </v-col>
 
-                                    <v-col cols="12" sm="12" md="12">
-                                      <v-file-input
-                                        label="File input"
-                                        ref="files"
-                                        outlined
-                                        dense
-                                        v-model="file"
-                                        @change="handleFileUpload()"
-                                      ></v-file-input>
-                                    </v-col>
-                                  </v-row>
-                                </v-container>
-                              </v-card-text>
+                                      <v-col cols="12" sm="12" md="12">
+                                        <v-file-input
+                                          label="File input"
+                                          ref="files"
+                                          outlined
+                                          dense
+                                          v-model="file"
+                                          @change="handleFileUpload()"
+                                        ></v-file-input>
+                                      </v-col>
+                                    </v-row>
+                                  </v-container>
+                                </v-card-text>
 
-                              <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeByAllowTable">取消</v-btn>
-                                <v-btn color="blue darken-1" text @click="saveByAllowTable">儲存</v-btn>
-                              </v-card-actions>
-                            </v-card>
-                          </v-dialog>
-                        </v-toolbar>
-                      </template>
-                      <template v-slot:item.actions="{ item }">
-                        <v-icon small class="mr-2" @click="editByAllowItem(item)">mdi-pencil</v-icon>
-                        <v-icon small @click="deleteByAllowItem(item)">mdi-delete</v-icon>
-                      </template>
-                      <template v-slot:no-data></template>
-                    </v-data-table>
-                  </v-col>
-                </v-row>
-                <v-btn color="primary" @click="disableFinishBtn = true">繼續</v-btn>
-                <v-btn text @click="e6=3">取消</v-btn>
-              </v-stepper-content>
-            </v-stepper>
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="blue darken-1" text @click="closeByAllowTable">取消</v-btn>
+                                  <v-btn color="blue darken-1" text @click="saveByAllowTable">儲存</v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </v-toolbar>
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                          <v-icon small class="mr-2" @click="editByAllowItem(item)">mdi-pencil</v-icon>
+                          <v-icon small @click="deleteByAllowItem(item)">mdi-delete</v-icon>
+                        </template>
+                        <template v-slot:no-data></template>
+                      </v-data-table>
+                    </v-col>
+                  </v-row>
+                  <v-btn color="primary" @click="disableFinishBtn = true">繼續</v-btn>
+                  <v-btn text @click="e6=3">取消</v-btn>
+                </v-stepper-content>
+              </v-stepper>
 
-            <!--
+              <!--
               End of:
               Setting vote list by dataTable
-            -->
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
+              -->
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+    </v-skeleton-loader>
   </div>
 </template>
+
 <script>
 // import library
+
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh.js";
+// import select from "../components/select";
 import { mapState, mapActions } from "vuex";
 export default {
   components: {
@@ -428,8 +439,20 @@ export default {
   },
   data() {
     return {
+      options1: ["value1", "value2", "value3"],
+
+      days: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Saturday"
+      ],
+      loading: true,
       editor: ClassicEditor,
       editorData: "",
+      startAnnounceformat: "",
       editorConfig: {
         // The configuration of the editor.
         language: "zh",
@@ -444,7 +467,6 @@ export default {
           options: {
             resourceType: "Images"
           }
-
           // 初步處理上傳邏輯返回json數據，包括uploaded（選項true / false）和url兩個細分
         }
       },
@@ -463,7 +485,7 @@ export default {
         name: [val => (val || "").length > 0 || "問卷標題不能空白"]
       },
       form: {
-        //標題
+        //投票活動標題
         activityName: "",
         // 介紹
         introduction:
@@ -483,14 +505,20 @@ export default {
         voteQry: "",
         // 主辦單位
         organizer: "",
-        // 需報名
-        needSignup: "",
-        // 投票規則
-        rule: "",
+        /**
+         * 預設需報名
+         * 1:需報名 2:不需報名
+         */
+        needSignup: 1,
+        /**
+         * 評分方式
+         * 評分方式0管理者指定名次1投票決定2評分決定
+         */
+        rule: 1,
         // 是否公開
         public: "",
         // 公開時間
-        startAnnounceTime: "",
+        startAnnounce: "",
         //Excel名單
         file: [],
         // 候選名單資料集合
@@ -547,27 +575,29 @@ export default {
       startAnnounceItem: [
         {
           name: "前一天",
-          value: "the day before"
+          value: 1
         },
         {
           name: "前七天",
-          value: "The first seven days"
+          value: 2
         },
         {
           name: "前一個月",
-          value: "The previous months"
+          value: 3
         },
         {
           name: "前三個月",
-          value: "The first three months"
+          value: 4
         }
       ],
       disableFinishBtn: false
     };
   },
   created() {
+    // 觸發vuex Action
     this.$store.dispatch("GET_CLASSIFY");
     this.$store.dispatch("GET_DEP");
+    this.loading = false;
   },
   methods: {
     ...mapActions(["POST_ACTIVITY"]),
@@ -592,26 +622,52 @@ export default {
       formData.append("file", this.file);
       //use axios
     },
+    /**
+     * Table Function
+     * 投票項目
+     * 編輯表格內容 包含 候選人、備註
+     */
     editItem(item) {
       this.editedIndex = this.form.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
+    /**
+     * Table Function
+     * 投票名單
+     * 編輯表格內容 包含 名稱、單位
+     */
     editByAllowItem(item) {
       this.allowEditedIndex = this.form.allowDesserts.indexOf(item);
       this.allowEditedItem = Object.assign({}, item);
       this.allowList_dialog = true;
     },
+    /**
+     * Table Function
+     * 投票項目
+     * 刪除表格內容 包含
+     */
     deleteItem(item) {
       const index = this.form.desserts.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.form.desserts.splice(index, 1);
+      // 防呆
+      confirm("您確定要刪除此項目嗎?") && this.form.desserts.splice(index, 1);
     },
+    /**
+     * Table Function
+     * 投票名單
+     * 刪除表格內容 包含
+     */
     deleteByAllowItem(item) {
       const index = this.form.allowDesserts.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
+      // 防呆
+      confirm("您確定要刪除此項目嗎?") &&
         this.form.allowDesserts.splice(index, 1);
     },
+    /**
+     * Table Function
+     * 投票項目
+     * 關閉Model
+     */
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -619,6 +675,11 @@ export default {
         this.editedIndex = -1;
       });
     },
+    /**
+     * Table Function
+     * 投票名單
+     * 關閉Model
+     */
     closeByAllowTable() {
       this.allowList_dialog = false;
       this.$nextTick(() => {
@@ -626,7 +687,7 @@ export default {
         this.allowEditedIndex = -1;
       });
     },
-
+    // 保留並加入欄位
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.form.desserts[this.editedIndex], this.editedItem);
@@ -637,6 +698,7 @@ export default {
     },
     saveByAllowTable() {
       if (this.allowEditedIndex > -1) {
+        // 複製物件中屬性
         Object.assign(
           this.form.allowDesserts[this.allowEditedIndex],
           this.allowEditedItem
@@ -646,7 +708,11 @@ export default {
       }
       this.closeByAllowTable();
     },
-    // 送出
+    /**
+     * 表單項目送至網頁後端存進DB
+     * @json
+     * 返回00及代表資料庫新增成功，反之01則失敗
+     */
     send() {
       this.POST_ACTIVITY(this.form).then(data => {
         console.log(data);
@@ -654,24 +720,74 @@ export default {
     }
   },
   computed: {
+    /**
+     * vuex 取得state狀態
+     */
     ...mapState({
+      // 類別
       classify: state => state.admin.classify,
+      // 部別
       department: state => state.admin.dep,
+      // 投票項目表格Header
       candidate_headers: state => state.admin.candidateHeaders,
+      // 投票名單表格Header
       join_list_headers: state => state.admin.joinHeaders,
       needSignupItem: state => state.admin.needSignupItem,
+      // 規則 ex:管理者指定名次
       rulesItem: state => state.admin.rulesItem
     }),
+    /**
+     * STEP 1 防呆
+     * @return Boolean
+     */
     isCreateSuccess() {
       if (!this.form.activityName) return true;
       if (!this.form.introduction) return true;
       return false;
     },
+    /**
+     * STEP 2 防呆
+     * @return Boolean
+     */
     isDisabled() {
       if (!this.form.startDate) return true;
       if (!this.form.endDate) return true;
       if (!this.form.voteQry) return true;
       return false;
+    }
+  },
+  watch: {
+    /**
+     * 計算公告時間
+     * @return Date
+     */
+
+    startAnnounceformat() {
+      // 如果沒有選擇開始日期就不計算
+      if (!this.form.startDate) return "";
+      // 公告時間選項 ex:前一個月....
+      var result = this.startAnnounceformat;
+      // 取得開始日期
+      var _startDate = this.form.startDate;
+      // initialize
+      var _dat = new Date(_startDate);
+
+      switch (result) {
+        case 1:
+          // 計算
+          _dat.setDate(_dat.getDate() - 1);
+          break;
+        case 2:
+          _dat.setDate(_dat.getDate() - 7);
+          break;
+        case 3:
+          _dat.setMonth(_dat.getMonth() - 1);
+          break;
+        case 4:
+          _dat.setMonth(_dat.getMonth() - 3);
+          break;
+      }
+      this.form.startAnnounce = _dat.toLocaleDateString();
     }
   }
 };

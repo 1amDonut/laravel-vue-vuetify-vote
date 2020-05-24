@@ -25,7 +25,7 @@ class CreateActivityTable extends Migration
             $table->integer('rule')->comment('評分方式0管理者指定名次1投票決定2評分決定');
             $table->string('organizer', 15)->comment('主辦單位');
             $table->string('manager', 10)->comment('活動管理者');
-            $table->string('activityDescription', 50)->comment('活動說明');
+            $table->text('activityDescription')->comment('活動說明');
             $table->integer('isVisible')->comment('是否公布資訊')->default('0');
             $table->dateTime('startAnnounce', 50)->comment('開始公告');
             $table->string('attachmentFile', 50)->comment('選舉說明附檔')->nullable();
