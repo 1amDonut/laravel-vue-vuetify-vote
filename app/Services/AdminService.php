@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Services;
-
+// import model
+// 投票活動資料表
 use App\Activity;
 use App\Comment;
-use App\Applied;
+// 投票候選人資料表
+use App\Candidate;
+// 參加投票資料表
+use App\Participants;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,18 +17,26 @@ class AdminService
     public function post($postdata)
     {
         $idActivity = "";
+        // try {
+        //     $newActivity = Activity::create($postdata);
+        //     // Find Activity table column idActivity
+        //     // $idActivity = Activity::select('idActivity')->find($newActivity->idActivity);
+        // } catch (Exception $e) {
+        //     return $e;
+        // }
+
+        // INSERT INTO Participate Then get Activity->idActivity
+        // $postdata["desserts"]["idActivity"] = $newActivity->idActivity;
         try {
-            $newActivity = Activity::create($postdata);
-            $idActivity = Activity::select('idActivity')->find($newActivity);
+            // 新增參加投票名單至資料庫
+            foreach ($postdata["allowDesserts"] as $item => $index) {
+                $newParticipants = Participants::create($item);
+            }
         } catch (Exception $e) {
             return $e;
         }
 
-        try{
-            $newApplied = Applied::created($postdata["desserts"]);
-        }catch(Exception $e){
-            return $e;
-        }
+        return true;
     }
     public function showActivity()
     {

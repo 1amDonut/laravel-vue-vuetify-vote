@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Applied extends Model
+class Candidate extends Model
 {
-    protected $table = "applied";
+    protected $table = "candidate";
     protected $fillable = ['idSignUp','name','deparment','votingQty','signupTime','docFile','idActivity'];
 }

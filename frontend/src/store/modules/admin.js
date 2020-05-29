@@ -4,45 +4,45 @@ export default {
         classify: {},
         dep: {},
         candidateHeaders: [{
-                text: "候選人(項目)",
-                align: "start",
-                value: "name"
-            },
-            {
-                text: "備註",
-                value: "remarks",
-                sortable: false
-            },
-            {
-                text: "附件",
-                value: "Appendix",
-                sortable: false
-            },
-            {
-                text: "動作",
-                value: "actions",
-                sortable: false
-            }
+            text: "候選人(項目)",
+            align: "start",
+            value: "name"
+        },
+        {
+            text: "備註",
+            value: "remarks",
+            sortable: false
+        },
+        {
+            text: "附件",
+            value: "Appendix",
+            sortable: false
+        },
+        {
+            text: "動作",
+            value: "actions",
+            sortable: false
+        }
         ],
         joinHeaders: [{
-                text: "單位",
-                value: "develop"
-            },
-            {
-                text: "候選人(項目)",
-                align: "start",
-                value: "name"
-            },
-            {
-                text: "附件",
-                value: "Appendix",
-                sortable: false
-            },
-            {
-                text: "動作",
-                value: "actions",
-                sortable: false
-            }
+            text: "單位",
+            value: "develop"
+        },
+        {
+            text: "候選人(項目)",
+            align: "start",
+            value: "name"
+        },
+        {
+            text: "附件",
+            value: "Appendix",
+            sortable: false
+        },
+        {
+            text: "動作",
+            value: "actions",
+            sortable: false
+        }
         ],
         needSignupItem: [{
             name: '是',
@@ -52,17 +52,17 @@ export default {
             value: 0
         }],
         rulesItem: [{
-                name: '管理者指定名次',
-                value: 1
-            },
-            {
-                name: '投票決定',
-                value: 2
-            },
-            {
-                name: '評分決定',
-                value: 3
-            }
+            name: '管理者指定名次',
+            value: 1
+        },
+        {
+            name: '投票決定',
+            value: 2
+        },
+        {
+            name: '評分決定',
+            value: 3
+        }
         ]
 
     },
@@ -91,10 +91,10 @@ export default {
             })
         },
         POST_ACTIVITY(context, payload) {
-            adminServices
+            return adminServices
                 .post(payload)
-                .then(result => {
-                    console.log(result.data);
+                .then(data => {
+                    return data;
                 });
         }
     }

@@ -13,7 +13,7 @@ class CreateAppliedTable extends Migration
      */
     public function up()
     {
-        Schema::create('applied', function (Blueprint $table) {
+        Schema::create('candidate', function (Blueprint $table) {
             $table->bigIncrements('idApplied');
             $table->integer('idSignUp')->comment('報名者ID');
             $table->string('name', 11)->comment('姓名');

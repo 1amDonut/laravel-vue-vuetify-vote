@@ -25,9 +25,10 @@ class AdminController extends BaseController
      * ex:校務資訊組
      * methods POST
      */
-    public function getDev(){
+    public function getDev()
+    {
         $result = Department::all();
-        return $this->sendResponse($result->toArray(),'success');
+        return $this->sendResponse($result->toArray(), 'success');
     }
     /**
      * 送出投票項目
@@ -40,25 +41,36 @@ class AdminController extends BaseController
         // 建立投票活動者為管理員
         $postData["manager"] = "1310731047";
 
-        print_r($postData);
-        print_r($postData["desserts"]);
-        // 建立報名時間
+        // print_r($postData);
+        print_r($postData["allowDesserts"]["0"]);
+        // echo $postData["allowDesserts"][0];
+        foreach ($postData["allowDesserts"] as $index => $item) {
+            print_r($item);
+        }
+
+        return $this->sendResponse('success', 'success');
+        // 建立報名時間`
         $postData["signupTime"] = date('Y-m-d H:i:s');
         $adminService = new AdminService();
-        // $result = $adminService->post($postData);
-        // return $this->sendResponse($result, 'success');
-        return $this->sendResponse('success', 'success');
+        $result = $adminService->post($postData);
+        if ($result) {
+            echo 'true';
+        } else {
+            echo 'false';
+        }
+        return $this->sendResponse($result, 'success');
     }
     /**
      * 上傳功能
      * methods POST
      * @return json
      */
-    public function upload(){
-        $data = array("url"=>"https://autos.yahoo.com.tw/p/r/w1200/car-trim/April2020/86f0ee25b04090de368f8202649df887.jpeg");
-        
+    public function upload()
+    {
+        $data = array("url" => "https://autos.yahoo.com.tw/p/r/w1200/car-trim/April2020/86f0ee25b04090de368f8202649df887.jpeg");
+
         // $data = array("message"=>"error");
         // $result = array("error"=>$data);
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 }
