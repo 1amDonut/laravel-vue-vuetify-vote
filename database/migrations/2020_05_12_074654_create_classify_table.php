@@ -16,7 +16,8 @@ class CreateClassifyTable extends Migration
         Schema::create('classify',function(Blueprint $table){
             $table->bigIncrements('IdClassify');
             $table->string('className',50)->comment('類別名稱');
-            $table->string('description',255)->comment('說明');
+            $table->string('description',255)->comment('說明')->nullable();
+            $table->timestamps();
         });
     }
 

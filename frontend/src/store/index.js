@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import news from "./modules/news"
 import product from "./modules/new"
 import admin from "./modules/admin"
+import snackbar from "./modules/snackbar"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -22,6 +23,8 @@ export default new Vuex.Store({
      */
     product,
     // 
-    admin
+    admin,
+    // vuetify snackbar
+    snackbar,
   }
 })

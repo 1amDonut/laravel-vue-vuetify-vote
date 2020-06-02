@@ -27,7 +27,7 @@ class CreateActivityTable extends Migration
             $table->string('manager', 10)->comment('活動管理者');
             $table->text('activityDescription')->comment('活動說明');
             $table->integer('isVisible')->comment('是否公布資訊')->default('0');
-            $table->dateTime('startAnnounce', 50)->comment('開始公告');
+            $table->dateTime('startAnnounce')->comment('開始公告');
             $table->string('attachmentFile', 50)->comment('選舉說明附檔')->nullable();
             // 加入軟刪除
             $table->softDeletes();

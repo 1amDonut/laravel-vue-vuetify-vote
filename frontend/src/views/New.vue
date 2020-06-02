@@ -9,6 +9,7 @@
       <v-btn text color="primary" @click="dialog = false">取消</v-btn>
       <v-btn text v-if="disableFinishBtn" @click="send">送出</v-btn>
     </v-list-item>
+    <Snackbar></Snackbar>
     <!-- 分隔 -->
     <v-divider></v-divider>
     <v-card>
@@ -182,7 +183,7 @@
                 <v-row>
                   <v-col cols="12" sm="2" md="2" class="text-center font-bold">主辦單位</v-col>
                   <v-col cols="12" sm="5" md="5">
-                     <v-autocomplete
+                    <v-autocomplete
                       :items="department"
                       v-model="form.organizer"
                       item-text="DEP_NAME"
@@ -460,9 +461,11 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh.js";
 // import select from "../components/select";
 import { mapState, mapActions } from "vuex";
+import Snackbar from "../components/snackbar";
 export default {
   components: {
     // vButton
+    Snackbar
   },
   data() {
     return {
@@ -571,11 +574,11 @@ export default {
       allowEditedIndex: -1,
       // 候選名單Model
       editedItem: {
-        name: "",
+        name: ""
       },
       // 可投票名單Model
       allowEditedItem: {
-        name: "",
+        name: ""
       },
       // 預設欄位值
       defaultItem: {
@@ -735,6 +738,15 @@ export default {
     send() {
       this.POST_ACTIVITY(this.form).then(data => {
         console.log(data);
+      });
+    },
+    /**
+     * SET Snackbar status like success or error & info
+     *  */
+    loadSnackbar() {
+      this.$store.dispatch("setSnackbar", {
+        msg: "測試訊息",
+        status: "success"
       });
     }
   },
