@@ -1,8 +1,14 @@
 import adminServices from "../../services/admin.services";
 export default {
     state: {
+        // 類別 ex：其他類、學習類
         classify: {},
+        // 單位名單 ex：校務資訊組
         dep: {},
+        /**
+         * DataTable 候選名單 欄位設計
+         * text=>表格標題列 value=>表格內容
+         */
         candidateHeaders: [{
             text: "候選人(項目)",
             align: "start",
@@ -24,14 +30,22 @@ export default {
             sortable: false
         }
         ],
+        /**
+         * DataTable 可投票名單 欄位設計
+         * text=>表格標題列 value=>表格內容
+         */
         joinHeaders: [{
             text: "單位",
-            value: "develop"
+            value: "department"
         },
         {
-            text: "候選人(項目)",
+            text: "姓名",
             align: "start",
             value: "name"
+        },
+        {
+            text: "性別",
+            value: "sex"
         },
         {
             text: "附件",
@@ -51,6 +65,7 @@ export default {
             name: '否',
             value: 0
         }],
+        // 投票規則選項
         rulesItem: [{
             name: '管理者指定名次',
             value: 1

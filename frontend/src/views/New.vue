@@ -400,7 +400,7 @@
                                       <v-text-field v-model="allowEditedItem.name" label="名稱"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="6">
-                                      <v-text-field v-model="allowDefaultem.sex" label="性別"></v-text-field>
+                                      <v-text-field v-model="allowEditedItem.sex" label="性別"></v-text-field>
                                     </v-col>
                                     <!--  -->
                                     <v-col cols="12" sm="12" md="12">
@@ -591,7 +591,8 @@ export default {
       // 預設欄位值
       allowDefaultem: {
         name: "",
-        dev: ""
+        dev: "",
+        sex:"",
       },
       // 設定公開選項時間
       startAnnounceItem: [
@@ -737,16 +738,12 @@ export default {
      */
     send() {
       this.POST_ACTIVITY(this.form).then(data => {
-        console.log(data);
-      });
-    },
-    /**
-     * SET Snackbar status like success or error & info
-     *  */
-    loadSnackbar() {
-      this.$store.dispatch("setSnackbar", {
-        msg: "測試訊息",
-        status: "success"
+        if (data["message"] == "00") {
+          this.$store.dispatch("setSnackbar", {
+            msg: data["data"],
+            status: "success"
+          });
+        }
       });
     }
   },

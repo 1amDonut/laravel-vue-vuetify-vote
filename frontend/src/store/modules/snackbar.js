@@ -23,7 +23,6 @@ export default {
     },
     actions: {
         setSnackbar(context, options) {
-            console.log(options.status);
             context.commit('SET_SNACKBAR', options);
             setTimeout(() => {
                 context.commit('CLOSE_SNACKBAR');
