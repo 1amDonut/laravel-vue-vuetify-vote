@@ -64,6 +64,126 @@
                 },
                 "deprecated": false
             }
+        },
+        "/AdminController/getClassify": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "投票類別之資料",
+                "description": "投票類別之資料",
+                "operationId": "getClassify",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "用戶授權",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "400": {
+                        "description": "發生錯誤"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/AdminController/getDev": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "行政單位及教學單之資料",
+                "description": "行政單位及教學單之資料",
+                "operationId": "getDev",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "用戶授權",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "400": {
+                        "description": "發生錯誤"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/AdminController/post": {
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "後臺建立投票活動接口",
+                "description": "後臺建立投票活動接口",
+                "operationId": "AdminController/post",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "用戶授權",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "400": {
+                        "description": "發生錯誤"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/AdminController/upload": {
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "後臺上傳檔案活動接口",
+                "description": "後臺上傳檔案活動接口",
+                "operationId": "/AdminController/upload",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "用戶授權",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "400": {
+                        "description": "發生錯誤"
+                    }
+                },
+                "deprecated": false
+            }
         }
     }
 }
