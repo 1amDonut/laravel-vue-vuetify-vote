@@ -13,7 +13,7 @@ class CreateParticipateTable extends Migration
      */
     public function up()
     {
-        // ->nullable 允許空值（NULL）
+        // ->nullable 允許空值（NULL）->default('0') 預設值
         Schema::create('participate', function (Blueprint $table) {
             $table->bigIncrements('participateSN')->comment('序號');
             // group為mysql保留字元 故以底線加入字元前面
@@ -22,7 +22,7 @@ class CreateParticipateTable extends Migration
             $table->string('name', 11)->comment('姓名');
             $table->string('sex', 2)->comment('性別');
             $table->integer('Scount')->comment('得票數')->nullable();
-            $table->integer('idActivity')->comment('外來鍵');
+            $table->integer('idActivity')->comment('外來鍵')->default('0');
             $table->integer('byVoter')->comment('是否被選舉人');
             $table->timestamps();
         });

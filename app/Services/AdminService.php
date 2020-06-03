@@ -16,25 +16,31 @@ class AdminService
 {
     public function post($postdata)
     {
-        $idActivity = "";
-        // try {
-        //     $newActivity = Activity::create($postdata);
-        //     // Find Activity table column idActivity
-        //     // $idActivity = Activity::select('idActivity')->find($newActivity->idActivity);
-        // } catch (Exception $e) {
-        //     return $e;
-        // }
+        // 捕獲了異常回傳Mysql Error訊息
+        try {
+            /**
+             *  ::create = > INSERT INTO
+             * INSERT INTO Activity 
+             *  */
+            $newActivity = Activity::create($postdata);
+            // Find Activity table column idActivity
+            // $idActivity = Activity::select('idActivity')->find($newActivity->idActivity);
+        } catch (Exception $e) {
+            return $e;
+        }
 
-        // INSERT INTO Participate Then get Activity->idActivity
-        // $postdata["desserts"]["idActivity"] = $newActivity->idActivity;
+        // 捕獲了異常回傳Mysql Error訊息
         try {
             // 新增參加投票名單至資料庫
-            foreach ($postdata["allowDesserts"] as $item => $index) {
+            foreach ($postdata["allowDesserts"] as $index => $item) {
+                // INSERT INTO Participate Then get Activity->idActivity
+                $item["idActivity"] = $newActivity->idActivity;
                 $newParticipants = Participants::create($item);
             }
         } catch (Exception $e) {
             return $e;
         }
+
 
         return true;
     }
