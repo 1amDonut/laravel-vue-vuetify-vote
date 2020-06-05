@@ -40,7 +40,7 @@ const routes = [{
   component: Vote
 },
 {
-  path: '/article',
+  path: '/article/:id',
   name: 'article',
   meta: {
     layout: 'default'

@@ -25,7 +25,6 @@
         data() {
             return {
                 drawer: null,
-                messages: 2,
                 show: false,
             }
         },

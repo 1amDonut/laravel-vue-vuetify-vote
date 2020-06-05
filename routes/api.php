@@ -22,8 +22,8 @@ Route::group(['middleware' => ['cors']], function () {
     /**
      * 公佈欄
      */
-    Route::group(['prefix'=>'news'],function(){
-        Route::get('getNewsData','NewsController@news');
+    Route::group(['prefix' => 'news'], function () {
+        Route::get('getNewsData', 'NewsController@news');
         Route::post('comment', 'NewsController@comment');
         Route::PUT('updateNews', 'NewsController@updateCommentData');
         Route::DELETE('deleteNews', 'NewsController@deleteCommentData');
@@ -31,24 +31,21 @@ Route::group(['middleware' => ['cors']], function () {
     /**
      * 投票活動
      */
-    Route::group(['prefix'=>'activity'],function(){
-        Route::get('show','ActivityController@showActivity');
-        Route::get('getActivityData','ActivityController@getCommentData');
+    Route::group(['prefix' => 'activity'], function () {
+        Route::get('show', 'ActivityController@showActivity');
+        Route::post('getActivity', 'ActivityController@getActivityDetail');
+        Route::get('get_Ticket','ActivityController@getTicket');
         Route::PUT('updateActivity', 'ActivityController@updateActivityData');
         Route::DELETE('deleteActivity', 'ActivityController@deleteActivityData');
     });
-    
-    Route::group(['prefix'=>'admin'],function(){
-        Route::get('getClassify','AdminController@getClassify');
-        Route::get('getDepartment','AdminController@getDev');
-        Route::post('post','AdminController@post');
-        Route::post('upload','AdminController@upload');
+    /**
+     * 後臺管理
+     */
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('getClassify', 'AdminController@getClassify');
+        Route::get('getDepartment', 'AdminController@getDev');
+        Route::post('post', 'AdminController@post');
+        Route::post('getPersonalData','AdminController@');
+        Route::post('upload', 'AdminController@upload');
     });
-    Route::get('getUserData', 'UserController@getUserData');
-    Route::get('getUserComment', 'CommentController@getUserComment');
-    Route::get('getCommentData','CommentController@getCommentData');
-    Route::post('comment', 'CommentController@comment');
-    Route::PUT('updateCommentData', 'commentController@updateCommentData');
-    Route::DELETE('deleteCommentData', 'commentController@deleteCommentData');
-    
 });

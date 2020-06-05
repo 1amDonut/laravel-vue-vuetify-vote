@@ -9,7 +9,7 @@
       <v-btn text color="primary" @click="dialog = false">取消</v-btn>
       <v-btn text v-if="disableFinishBtn" @click="send">送出</v-btn>
     </v-list-item>
-    <Snackbar></Snackbar>
+    
     <!-- 分隔 -->
     <v-divider></v-divider>
     <v-card>
@@ -461,11 +461,11 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/zh.js";
 // import select from "../components/select";
 import { mapState, mapActions } from "vuex";
-import Snackbar from "../components/snackbar";
+
 export default {
   components: {
     // vButton
-    Snackbar
+    // Snackbar
   },
   data() {
     return {

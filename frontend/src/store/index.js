@@ -4,6 +4,7 @@ import news from "./modules/news"
 import product from "./modules/new"
 import admin from "./modules/admin"
 import snackbar from "./modules/snackbar"
+import vote from "./modules/vote"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -22,6 +23,7 @@ export default new Vuex.Store({
      * 建立投票
      */
     product,
+    vote,
     // 
     admin,
     // vuetify snackbar

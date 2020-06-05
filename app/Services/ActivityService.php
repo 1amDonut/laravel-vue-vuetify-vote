@@ -9,10 +9,12 @@ class ActivityService
 {
     public function showActivity()
     {
-        return Activity::select('activityName', 'startAnnounce', 'activityDescription')
+        return Activity::select('idActivity', 'activityName', 'startAnnounce', 'activityDescription')
+            ->where('startAnnounce', '<=', date('Y-m-d H:i:s'))
             ->orderByDesc('startAnnounce')
             ->get();
     }
+
     public function Activity()
     {
         $postdata = [
@@ -29,10 +31,10 @@ class ActivityService
             ->find($newComment->comment_id);
     }
 
-    public function getActivity($data)
+    public function getActivity($id)
     {
         return Activity::select('activity.*')
-            ->where('idActivity', $data['id'])
+            ->where('idActivity', $id)
             ->get();
         // ->toArray();
     }
@@ -41,7 +43,6 @@ class ActivityService
     {
         return Activity::all();
     }
-
     public function updateActivity($data)
     {
         $news = Activity::find($data['idNews']);
