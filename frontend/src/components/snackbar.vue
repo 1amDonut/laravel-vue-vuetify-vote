@@ -1,7 +1,7 @@
 <template>
   <v-snackbar v-model="visible" :color="color" top>
     {{ this.$store.state.snackbar.msg }}
-    <v-btn @click="snackbar = false">關閉</v-btn>
+    <v-btn @click="close">關閉</v-btn>
   </v-snackbar>
 </template>
 <script>
@@ -15,6 +15,10 @@ export default {
       return this.$store.state.snackbar.color;
     }
   },
-  methods: {}
+  methods: {
+    close(){
+      this.$store.commit('CLOSE_SNACKBAR');
+    }
+  }
 };
 </script>
