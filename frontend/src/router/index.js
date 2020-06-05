@@ -58,13 +58,14 @@ const routes = [{
 },
 {
   // 投票頁面
-  path: '/voting',
+  path: '/voting/:id',
   name: 'voting',
   meta: {
     layout: 'default'
   },
   component: voting
 },
+
 {
   path: '/getTicket',
   name: 'getTicket',
@@ -81,7 +82,7 @@ const routes = [{
 },
 //設定頁面
 {
-  path: '/Activity',
+  path: '/Activity/:id',
   name: 'Activity',
   meta: {
     layout: 'Admin'
