@@ -99,4 +99,38 @@ class AdminService
             return false;
         }
     }
+    /**
+     * @OA\Get(
+     *     path="/Activity/getPersonalActivity",
+     *     tags={"API"},
+     *     summary="檢視管理者自行建立投票",
+     *     description="檢視管理者自行建立投票",
+     *     operationId="getPersonalActivity",
+     *     deprecated=false,
+     *     @OA\Parameter(
+     *         name="access_token",
+     *         in="query",
+     *         description="用戶授權",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="操作成功返回"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="發生錯誤"
+     *     )
+     * )
+     */
+    public function getPersonalActivity()
+    {
+        return Activity::select('activityName', 'startAnnounce', 'activityDescription')
+            ->where('startAnnounce', '<=', date('Y-m-d H:i:s'))
+            ->orderByDesc('startAnnounce')
+            ->get();
+    }
 }

@@ -20,7 +20,7 @@ class ActivityController extends BaseController
      *     @OA\Parameter(
      *         name="access_token",
      *         in="query",
-     *         description="用户授权",
+     *         description="用戶授權",
      *         required=true,
      *         @OA\Schema(
      *             type="string"
@@ -32,20 +32,26 @@ class ActivityController extends BaseController
      *     ),
      *     @OA\Response(
      *         response=400,
-     *         description="发生错误"
+     *         description="發生錯誤"
      *     )
      * )
      */
+    public function showActivity(){
+        $activityService = new ActivityService();
+        $result = $activityService->showActivity();
+        return $this->sendResponse($result->toArray(), '00');
+    }
     public function getActivity()
     {
         $activityService = new ActivityService();
         $activityService->Activity();
     }
-    public function showActivity()
+    public function getActivityDetail(Request $request)
     {
+        $id = $request->input('vote_id');
         $activityService = new ActivityService();
-        $result = $activityService->showActivity();
-        return $this->sendResponse($result->toArray(), 'success');
+        $result = $activityService->getActivity($id);
+        return $this->sendResponse($result->toArray(), '00');
     }
     /**
      * @OA\Post(

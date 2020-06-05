@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\http\Controllers\BaseController as BaseController;
 use App\Classify;
 use App\Department;
+use App\Services\ActivityService;
 use App\Services\AdminService;
 
 class AdminController extends BaseController
@@ -147,5 +148,43 @@ class AdminController extends BaseController
         // $data = array("message"=>"error");
         // $result = array("error"=>$data);
         return response()->json($data, 200);
+    }
+    /**
+     * @OA\Get(
+     *     path="/AdminController/personalActivity",
+     *     tags={"API"},
+     *     summary="",
+     *     description="",
+     *     operationId="/AdminController/upload",
+     *     deprecated=false,
+     *     @OA\Parameter(
+     *         name="access_token",
+     *         in="query",
+     *         description="用戶授權",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="操作成功返回"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="發生錯誤"
+     *     )
+     * )
+     */
+    public function personalActivity(Request $request)
+    {
+        $adminService = new AdminService();
+        $user_id = $request->input('user_id');
+        $result = $adminService->getPersonalActivity($user_id);
+        if ($result) {
+            return $this->sendResponse('success', '00');
+        } else {
+            return $this->sendResponse($result, '01');
+        }
     }
 }
